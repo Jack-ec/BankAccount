@@ -6,7 +6,8 @@ public class BankAccount {
 	double balance;
 	double withdrawalFee;
 	double annualInterestRate;
-	static int accountID;
+	int accountID;
+	static int nextAccountID = 1000000;
 	// constructors
 	public BankAccount() {
 		this("");
@@ -24,7 +25,16 @@ public class BankAccount {
 		this(accountName, balance, withdrawalFee, annualInterestRate, 0);
 	}
 	public BankAccount(String accountName, double balance, double withdrawalFee, double annualInteresrRate, int accountID) {
-
+		if (accountName.length() <= 20) {
+			this.accountName = accountName;
+		}
+		else { 
+			this.accountName = accountName.substring(0, 20);
+		}
+		this.balance = balance;
+		this.withdrawalFee = withdrawalFee;
+		this.accountID = nextAccountID;
+		nextAccountID = nextAccountID + 1;
 	}
 	//getters
 	public String getAccountName() {
@@ -40,7 +50,24 @@ public class BankAccount {
 		return this.annualInterestRate;
 	}
 	public int getAccountID() {
-		return BankAccount.accountID;
+		return accountID;
+	}
+	public static int getNextAccountID() {
+		return nextAccountID;
+	}
+	
+	// mutators
+	
+	
+	
+	
+	public boolean isOverDrawn( ) {
+		if (balance < 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 
