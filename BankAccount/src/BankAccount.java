@@ -21,7 +21,7 @@ public class BankAccount {
 	public BankAccount(String accountName, double balance, double withdrawalFee) {
 		this(accountName, balance, withdrawalFee, 0);
 	}
-	
+
 	public BankAccount(String accountName, double balance, double withdrawalFee, double annualInterestRate) {
 		if (accountName.length() <= 20) {
 			this.accountName = accountName;
@@ -54,7 +54,7 @@ public class BankAccount {
 	public static int getNextAccountID() {
 		return nextAccountID;
 	}
-	
+
 	// mutators
 	public void setWithdrawalFee(double withdrawalFee) {
 		this.withdrawalFee = withdrawalFee;
@@ -62,14 +62,14 @@ public class BankAccount {
 	public void setAnnualInterestRate(double annualInterestRate) {
 		this.annualInterestRate = annualInterestRate;
 	}
-	
+
 	//Methods
 	public void deposit(double amount) {
 		balance = balance + amount;
 	}
 	public void withdraw(double amount) {
 		balance = balance - amount - withdrawalFee;
-		
+
 	}
 	public boolean isOverDrawn( ) {
 		if (balance < 0) {
@@ -85,7 +85,10 @@ public class BankAccount {
 		}
 		return balance;
 	}
-	
+	public String toString() {
+		return "BankAccount" + accountID':' + balance
+
+	}
 
 
 
