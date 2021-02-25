@@ -89,7 +89,7 @@ public class BankAccount {
 	}
 	public String toString() {
 		if ( balance < 0) {
-			return "BankAccount: name = " + "'" + accountName + "'; balance = ($" +  String.format("%.2f", balance) +  ")";
+			return "BankAccount: name = " + "'" + accountName + "'; balance = ($" +  String.format("%.2f", balance * (-1)) +  ")";
 		}
 		else {
 			return "BankAccount: name = " + "'" + accountName + "'; balance = $" + String.format("%.2f", balance);
