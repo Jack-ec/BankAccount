@@ -1,5 +1,6 @@
 
 
+
 public class BankAccount {
 
 	String accountName = "";
@@ -8,6 +9,7 @@ public class BankAccount {
 	double annualInterestRate;
 	int accountID;
 	static int nextAccountID = 1000000;
+	
 	// constructors
 	public BankAccount() {
 		this("");
@@ -86,7 +88,12 @@ public class BankAccount {
 		return balance;
 	}
 	public String toString() {
-		return "BankAccount" + accountID':' + balance
+		if ( balance < 0) {
+			return "BankAccount: name = " + "'" + accountName + "'; balance = ($" +  String.format("%.2f", balance) +  ")";
+		}
+		else {
+			return "BankAccount: name = " + "'" + accountName + "'; balance = $" + String.format("%.2f", balance);
+		}
 
 	}
 
