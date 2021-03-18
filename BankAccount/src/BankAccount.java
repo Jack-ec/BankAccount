@@ -9,7 +9,7 @@ public class BankAccount {
 	double annualInterestRate;
 	int accountID;
 	static int nextAccountID = 1000000;
-	
+
 	// constructors
 	public BankAccount() {
 		this("");
@@ -82,13 +82,13 @@ public class BankAccount {
 		}
 	}
 	public double addAnnualInterest() {
-		if (balance > 0) {
+		if (false == isOverDrawn()) {
 			balance = balance + ((balance * annualInterestRate) / 100);
 		}
 		return balance;
 	}
 	public String toString() {
-		if ( balance < 0) {
+		if (true == isOverDrawn()) {
 			return "BankAccount: name = " + "'" + accountName + "'; balance = ($" +  String.format("%.2f", balance * (-1)) +  ")";
 		}
 		else {
