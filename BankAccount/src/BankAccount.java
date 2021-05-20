@@ -1,5 +1,6 @@
-
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class BankAccount {
 
@@ -9,6 +10,8 @@ public class BankAccount {
 	double annualInterestRate;
 	int accountID;
 	static int nextAccountID = 1000000;
+	ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+
 
 	// constructors
 	public BankAccount() {
@@ -58,6 +61,7 @@ public class BankAccount {
 	}
 
 	// mutators
+
 	public void setWithdrawalFee(double withdrawalFee) {
 		this.withdrawalFee = withdrawalFee;
 	}
@@ -97,7 +101,36 @@ public class BankAccount {
 
 	}
 
+	public ArrayList<Transaction> getTransactions(LocalDateTime startTime, LocalDateTime endTime) {
+		ArrayList<Transaction> returnList = new ArrayList<Transaction>();
+		for (int i = 0; i < transactions.size(); i++) {
+			if (startTime != null && endTime != null) {
+				if (transactions.get(i).getTransactionTime().isBefore(endTime)) {
+					returnList.set(i,  transactions.get(i));
+					Collections.reverse(returnList);
+				}
+			}
+			else if (startTime != null) {
+				if (transactions.get(i).getTransactionTime().isBefore(endTime)) {
+					returnList.set(i,  transactions.get(i));
+					Collections.reverse(returnList);
+				}
 
+			}
+			else if (endTime != null) {
+				if (transactions.get(i).getTransactionTime().isAfter(startTime)) {
+					returnList.set(i,  transactions.get(i));
+					Collections.reverse(returnList);
+				}
+			}
+			else {
+				if (transactions.get(i).getTransactionTime().isAfter(startTime) && transactions.get(i).getTransactionTime().isBefore(endTime)) {
+					returnList.set(i,  transactions.get(i));
+					Collections.reverse(returnList);
+				}
+			}
+		}return returnList;
 
-
+	}
 }
+
