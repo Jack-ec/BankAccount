@@ -70,12 +70,45 @@ public class BankAccount {
 	}
 
 	//Methods
+	public void deposit() {
+		this.deposit(0);
+	}
 	public void deposit(double amount) {
+		this.deposit(amount, "");
+	}
+	public void deposit(double amount, String description) {
+		this.deposit(LocalDateTime.now(),amount,description);
+	}
+	public void deposit (LocalDateTime transactionTime, double amount, String description) {
 		balance = balance + amount;
+		Transaction deposit = new Transaction(transactionTime, amount, description);
+		insertTransaction(deposit);
+	}
+	public void withdraw() {
+		this.withdraw(0);
 	}
 	public void withdraw(double amount) {
-		balance = balance - amount - withdrawalFee;
-
+		this.withdraw(amount, "");
+	}
+	public void withdraw(double amount, String description) {
+		this.withdraw(LocalDateTime.now(),amount,description);
+	}
+	public void withdraw(LocalDateTime transactionTime, double amount, String description) {
+		balance = (balance - amount) - withdrawalFee;
+		Transaction withdraw = new Transaction(transactionTime, amount, description);
+		insertTransaction(withdraw);
+	}
+	public void insertTransaction(Transaction transaction) {
+		boolean inserted = false;
+		for(int i = 0; i < transactions.size(); i++) {
+			if(transactions.get(i).getTransactionTime().isAfter(transaction.getTransactionTime())) {
+				transactions.add(i, transaction);
+				inserted = true;
+				break;
+			}
+		}if (inserted == false) {
+			transactions.add(transaction);
+		}
 	}
 	public boolean isOverDrawn( ) {
 		if (balance < 0) {
@@ -104,31 +137,9 @@ public class BankAccount {
 	public ArrayList<Transaction> getTransactions(LocalDateTime startTime, LocalDateTime endTime) {
 		ArrayList<Transaction> returnList = new ArrayList<Transaction>();
 		for (int i = 0; i < transactions.size(); i++) {
-			if (startTime != null && endTime != null) {
-				if (transactions.get(i).getTransactionTime().isBefore(endTime)) {
-					returnList.set(i,  transactions.get(i));
-					Collections.reverse(returnList);
-				}
-			}
-			else if (startTime != null) {
-				if (transactions.get(i).getTransactionTime().isBefore(endTime)) {
-					returnList.set(i,  transactions.get(i));
-					Collections.reverse(returnList);
-				}
-
-			}
-			else if (endTime != null) {
-				if (transactions.get(i).getTransactionTime().isAfter(startTime)) {
-					returnList.set(i,  transactions.get(i));
-					Collections.reverse(returnList);
-				}
-			}
-			else {
-				if (transactions.get(i).getTransactionTime().isAfter(startTime) && transactions.get(i).getTransactionTime().isBefore(endTime)) {
-					returnList.set(i,  transactions.get(i));
-					Collections.reverse(returnList);
-				}
-			}
+			boolean upperBound = (startTime == null || transactions.get(i).getTransactionTime().isBefore(startTime) == false);
+			boolean lowerBound = (endTime == null || transactions.get(i).getTransactionTime().isAfter(endTime) == false);
+			
 		}return returnList;
 
 	}
