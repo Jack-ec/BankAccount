@@ -140,6 +140,9 @@ public class BankAccount {
 			boolean upperBound = (startTime == null || transactions.get(i).getTransactionTime().isBefore(startTime) == false);
 			boolean lowerBound = (endTime == null || transactions.get(i).getTransactionTime().isAfter(endTime) == false);
 			
+			if (lowerBound == true && upperBound == true) {
+				returnList.add(transactions.get(i));
+			}
 		}return returnList;
 
 	}
